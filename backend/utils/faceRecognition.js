@@ -1,7 +1,7 @@
-import { Canvas, Image, ImageData, loadImage } from "canvas";
+import { Canvas, Image, ImageData } from "canvas";
 import faceapi from "face-api.js";
 import path from "path";
-import fs from "fs";
+import Staff from "../db/Schema/StaffSchema.js";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -50,52 +50,36 @@ const loadModels = async () => {
   }
 };
 
-const compareFaces = async (user_image_json_file, uploadedImagePath) => {
+const compareFaces = async (embedding) => {
   try {
-    const uploadedImage = await loadImage(uploadedImagePath);
+    const embeddingFloat32 = new Float32Array(embedding);
 
-    // Saqlangan descriptor'ni o'qish va to'g'ri formatga aylantirish
-    const savedImage = JSON.parse(fs.readFileSync(user_image_json_file));
+    const allStaff = await Staff.find();
+    let identifiedStaff = null;
 
-   
-    
-    const savedDescriptor = new Float32Array(Object.values(savedImage));
+    allStaff.forEach((staff) => {
+      const staffEmbedFloat32 = new Float32Array(staff.embedding);
 
-    
+      const distance = faceapi.euclideanDistance(
+        embeddingFloat32,
+        staffEmbedFloat32
+      );
 
-    // Yuklangan descriptor'ni olish
-    const uploadedDetection = await faceapi
-      .detectSingleFace(uploadedImage)
-      .withFaceLandmarks()
-      .withFaceDescriptor();
+      console.log(distance);
 
-    if (!uploadedDetection) {
-      console.log("Uploaded image: yuz aniqlanmadi!");
-      return false; // Yuz aniqlanmasa
-    }
+      if (distance < 0.6) {
+        identifiedStaff = staff; 
 
-    const uploadedDescriptor = uploadedDetection.descriptor;
+        console.log(staff);  
+              
+        return identifiedStaff;
+      }else {
 
-    // Descriptor uzunligini tekshirish
-    if (savedDescriptor.length !== uploadedDescriptor.length) {
-
-
-      console.error("Descriptor uzunligi mos emas");
-      return false;
-    }
-
-    // Descriptor'larni solishtirish
-    const distance = faceapi.euclideanDistance(
-      savedDescriptor,
-      uploadedDescriptor
-    );
-
-    console.log(`Distance: ${distance}`);
-    return distance < 0.6; // Threshold: 0.6 dan kichik bo'lsa mos deb hisoblaymiz
-  } catch (err) {
-    console.error("Error detect images:", err);
-    return false; // Xatolik bo'lsa
+      }
+    });
+  } catch (error) {
+    console.error("Xato yuz berdi:", error);
   }
 };
 
-export { compareFaces, loadModels };
+export { loadModels, compareFaces };

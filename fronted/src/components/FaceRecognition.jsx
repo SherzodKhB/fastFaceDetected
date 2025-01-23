@@ -56,7 +56,7 @@ const FaceRecognition = () => {
     const setupDetection = () => {
       setInterval(() => {
         detectFace();
-      }, 1000); // Har 2 soniyada yuzni aniqlash
+      }, 10000); // Har 2 soniyada yuzni aniqlash
     };
 
    
