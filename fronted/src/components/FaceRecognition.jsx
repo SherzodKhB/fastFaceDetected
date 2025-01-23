@@ -1,16 +1,7 @@
-// src/components/FaceRecognition.js
+
 import React, { useEffect, useRef, useState } from 'react';
 import * as faceapi from 'face-api.js';
-// import * as tf from '@tensorflow/tfjs-core';
 
-
-// if (!tf.findBackend('webgl')) {
-//     tf.registerBackend('webgl', tf.findBackendFactory('webgl'));
-//   }
-  
-//   if (!tf.findBackend('cpu')) {
-//     tf.registerBackend('cpu', tf.findBackendFactory('cpu'));
-//   }
 
 const FaceRecognition = () => {
   const videoRef = useRef(null);
@@ -35,7 +26,7 @@ const FaceRecognition = () => {
         .withFaceDescriptor();
 
       if (detections) {
-        const response = await fetch('http://localhost:5000/api/staff/identify', {
+        const response = await fetch('http://192.168.1.110:5000/api/staff/identify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ embedding: Array.from(detections.descriptor) }),
@@ -56,7 +47,7 @@ const FaceRecognition = () => {
     const setupDetection = () => {
       setInterval(() => {
         detectFace();
-      }, 10000); // Har 2 soniyada yuzni aniqlash
+      }, 100); // Har 2 soniyada yuzni aniqlash
     };
 
    

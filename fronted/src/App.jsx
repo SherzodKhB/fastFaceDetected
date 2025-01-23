@@ -6,7 +6,8 @@ import * as faceapi from 'face-api.js';
 
 const App = () => {
 
-  const url = "http://localhost:5000/models"
+  // const url = "http://localhost:5000/models"
+  const url = "http://192.168.1.110:5000/models"
 
 
   const loadModels = async () => {
