@@ -56,6 +56,8 @@ const compareFaces = async (embedding) => {
 
     const allStaff = await Staff.find();
 
+    let find = null
+
     allStaff.forEach((staff) => {
       const staffEmbedFloat32 = new Float32Array(staff.embedding);
 
@@ -65,13 +67,15 @@ const compareFaces = async (embedding) => {
       );
 
       
-      if (Integer(distance) < 0.6) {
-        return staff;
-      } else {
-        console.log("jkljdsd");
-        
-      }
+      if (distance < 0.6) {
+        find =  staff;
+      } 
+
+      
     });
+
+
+    return find
   } catch (error) {
     console.error("Xato yuz berdi:", error);
   }
