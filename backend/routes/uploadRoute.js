@@ -15,6 +15,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/upload-image', authenticate, checkPhoto, upload.single('image'), uploadImage);
+router.post('/upload', authenticate, checkPhoto, upload.single('image'), uploadImage);
 
 export default router;

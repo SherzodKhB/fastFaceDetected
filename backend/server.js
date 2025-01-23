@@ -22,13 +22,18 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
+// nima url ga sorov kelyabdi korib turish
 app.use( (req, res, next) => {
     console.log(req.url);
     next()
 })
 
+// public ichidagi modellarni olishi uchun
 app.use("/models", express.static(path.join(__dirname, 'public/models')));
 
+// app.use('/api/staff', authRoutes);
 
 
 app.use("/api/staff/identify", (req, res) => {
@@ -48,11 +53,6 @@ connectDB();
 // (async () => {
 //     await loadModels(); // Modellarni dastur ishga tushganda bir marta yuklash
 //   })()
-
-// Routerlar
-// app.use('/api/auth', authRoutes);
-// app.use('/api/comments', commentRoutes);
-// app.use('/api/user', profile);
 
 
 
