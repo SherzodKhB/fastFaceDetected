@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import FaceRecognition from './components/FaceRecognition';
 import UploadEmployee from './components/UploadEmployee';
-// import * as faceapi from 'face-api.js';
+import * as faceapi from 'face-api.js';
 
 
 const App = () => {
 
-
-  // const loadModels = async () => {
-  //   await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
-  //   await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-  //   await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
-  // };
+  const url = "http://localhost:5000/models"
 
 
-  // useEffect(() => {
-  //   loadModels();
-  // }, []); 
+  const loadModels = async () => {
+
+    
+    await faceapi.nets.ssdMobilenetv1.loadFromUri(url);
+    await faceapi.nets.faceLandmark68Net.loadFromUri(url);
+    await faceapi.nets.faceRecognitionNet.loadFromUri(url);
+  };
+
+
+  useEffect(() => {
+    loadModels();
+  }, []); 
 
 
   const [currentMenu, setCurrentMenu] = useState('faceRecognition');

@@ -7,10 +7,10 @@ import connectDB from './config/db.js';
 // import { loadModels } from './utils/faceRecognition.js';
 import cors from "cors"
 import path from "path"
-import { loadModels } from './utils/faceRecognition.js';
+// import { loadModels } from './utils/faceRecognition.js';
 
 import { fileURLToPath } from 'url';
-import { log } from 'console';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -27,14 +27,27 @@ app.use( (req, res, next) => {
     next()
 })
 
+app.use("/models", express.static(path.join(__dirname, 'public/models')));
+
+
+
+app.use("/api/staff/identify", (req, res) => {
+    console.log(req.body);
+    res.json({
+        name: "Noma’lum",
+        position: "Developper"
+    })
+    
+})
+
 
 
 // MongoDB ulanishi
 connectDB();
 
-(async () => {
-    await loadModels(); // Modellarni dastur ishga tushganda bir marta yuklash
-  })()
+// (async () => {
+//     await loadModels(); // Modellarni dastur ishga tushganda bir marta yuklash
+//   })()
 
 // Routerlar
 // app.use('/api/auth', authRoutes);
@@ -42,7 +55,6 @@ connectDB();
 // app.use('/api/user', profile);
 
 
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 
