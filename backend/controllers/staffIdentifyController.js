@@ -6,7 +6,7 @@ const __dirname = path.dirname(__filename);
 import { compareFaces } from "../utils/faceRecognition.js";
 
 const identifyStaff = async (req, res) => {
-  
+
   const staff = await compareFaces(req.body.embedding);
 
 
@@ -17,6 +17,7 @@ const identifyStaff = async (req, res) => {
       name: staff.name,
       position: staff.position,
     });
+    
   }else {
     res.status(404).json({
       name: "Nomalum",

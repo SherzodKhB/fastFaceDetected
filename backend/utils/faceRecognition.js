@@ -55,7 +55,6 @@ const compareFaces = async (embedding) => {
     const embeddingFloat32 = new Float32Array(embedding);
 
     const allStaff = await Staff.find();
-    let identifiedStaff = null;
 
     allStaff.forEach((staff) => {
       const staffEmbedFloat32 = new Float32Array(staff.embedding);
@@ -65,16 +64,12 @@ const compareFaces = async (embedding) => {
         staffEmbedFloat32
       );
 
-      console.log(distance);
-
-      if (distance < 0.6) {
-        identifiedStaff = staff; 
-
-        console.log(staff);  
-              
-        return identifiedStaff;
-      }else {
-
+      
+      if (Integer(distance) < 0.6) {
+        return staff;
+      } else {
+        console.log("jkljdsd");
+        
       }
     });
   } catch (error) {
