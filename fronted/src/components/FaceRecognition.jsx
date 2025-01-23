@@ -26,7 +26,7 @@ const FaceRecognition = () => {
         .withFaceDescriptor();
 
       if (detections) {
-        const response = await fetch('http://192.168.1.110:5000/api/staff/identify', {
+        const response = await fetch('http://localhost:5000/api/staff/identify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ embedding: Array.from(detections.descriptor) }),

@@ -17,7 +17,7 @@ const UploadEmployee = () => {
     formData.append('name', name);
     formData.append('position', position);
 
-    const response = await fetch('http://192.168.1.110:5000/api/staff/upload', {
+    const response = await fetch('http://localhost:5000/api/staff/upload', {
       method: 'POST',
       body: formData,
     });

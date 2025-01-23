@@ -6,8 +6,8 @@ import * as faceapi from 'face-api.js';
 
 const App = () => {
 
-  // const url = "http://localhost:5000/models"
-  const url = "http://192.168.1.110:5000/models"
+  
+  const url = "http://localhost:5000/models"
 
 
   const loadModels = async () => {
@@ -28,7 +28,8 @@ const App = () => {
 
   return (
     <div>
-      <h1>Hodimni Yuklash va Yuzni Tanib Olish</h1>
+      <h1>Hodimni Yuklash va Yuzni Tanib Olish. Shu yerdan hodim rasmi ro'yhatda o'tadi</h1>
+      <h1> Shu yerdan hodim rasmi ro'yhatdan o'tadi</h1>
       <button onClick={() => setCurrentMenu('faceRecognition')}>Face Recognition</button>
       <button onClick={() => setCurrentMenu('uploadEmployee')}>Upload Employee</button>
 
